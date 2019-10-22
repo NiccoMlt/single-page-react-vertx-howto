@@ -118,40 +118,6 @@ You will configure the project so that the frontend development server proxies A
 <p>The code of this project contains Maven and Gradle build files that are functionally equivalent.</p>
 </div>
 <div class="sect2">
-<h3 id="using-maven">Using Maven</h3>
-<div class="paragraph">
-<p>Add the <code>vertx-web</code> dependency in you Maven POM file:</p>
-</div>
-<div class="listingblock">
-<div class="title">Maven <code>pom.xml</code></div>
-<div class="content">
-<pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="xml">  <span style="color: #000080">&lt;dependencies&gt;</span>
-    <span style="color: #000080">&lt;dependency&gt;</span>
-      <span style="color: #000080">&lt;groupId&gt;</span>io.vertx<span style="color: #000080">&lt;/groupId&gt;</span>
-      <span style="color: #000080">&lt;artifactId&gt;</span>vertx-web<span style="color: #000080">&lt;/artifactId&gt;</span>
-      <span style="color: #000080">&lt;version&gt;</span>${vertx.version}<span style="color: #000080">&lt;/version&gt;</span>
-    <span style="color: #000080">&lt;/dependency&gt;</span>
-  <span style="color: #000080">&lt;/dependencies&gt;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then add the <code>exec-maven-plugin</code>:</p>
-</div>
-<div class="listingblock">
-<div class="title">Maven <code>pom.xml</code></div>
-<div class="content">
-<pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="xml">      <span style="color: #000080">&lt;plugin&gt;</span>
-        <span style="color: #000080">&lt;groupId&gt;</span>org.codehaus.mojo<span style="color: #000080">&lt;/groupId&gt;</span>
-        <span style="color: #000080">&lt;artifactId&gt;</span>exec-maven-plugin<span style="color: #000080">&lt;/artifactId&gt;</span>
-        <span style="color: #000080">&lt;version&gt;</span>1.5.0<span style="color: #000080">&lt;/version&gt;</span>
-        <span style="color: #000080">&lt;configuration&gt;</span>
-          <span style="color: #000080">&lt;mainClass&gt;</span>io.vertx.howtos.react.BackendVerticle<span style="color: #000080">&lt;/mainClass&gt;</span>
-        <span style="color: #000080">&lt;/configuration&gt;</span>
-      <span style="color: #000080">&lt;/plugin&gt;</span></code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
 <h3 id="using-gradle">Using Gradle</h3>
 <div class="paragraph">
 <p>Assuming you use Gradle with the Kotlin DSL, add the <code>vertx-web</code> dependency:</p>
@@ -259,9 +225,6 @@ Keep in mind that when the whole application is built and put to production, the
 <p>straight from your IDE or,</p>
 </li>
 <li>
-<p>with Maven: <code>mvn compile exec:java</code>, or</p>
-</li>
-<li>
 <p>with Gradle: <code>./gradlew run</code> (Linux, macOS) or <code>gradlew run</code> (Windows).</p>
 </li>
 </ul>
@@ -292,10 +255,10 @@ Please refer to the <a href="https://httpie.org/doc#installation">installation</
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="javascript"><span style="background-color: #f8f8f8">HTTP</span><span style="color: #000000;font-weight: bold">/</span><span style="color: #009999">1.1</span> <span style="color: #009999">200</span> <span style="background-color: #f8f8f8">OK</span>
-<span style="background-color: #f8f8f8">content</span><span style="color: #000000;font-weight: bold">-</span><span style="background-color: #f8f8f8">length</span><span style="background-color: #f8f8f8">:</span> <span style="color: #009999">24</span>
+<pre class="rouge highlight" style="background-color: #f8f8f8"><code>HTTP/1.1 200 OK
+content-length: 24
 
-<span style="background-color: #f8f8f8">Hello</span> <span style="background-color: #f8f8f8">React</span> <span style="color: #000000;font-weight: bold">from</span> <span style="background-color: #f8f8f8">Vert</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">x</span><span style="color: #000000;font-weight: bold">!</span></code></pre>
+Hello React from Vert.x!</code></pre>
 </div>
 </div>
 </div>
@@ -355,21 +318,47 @@ However, as you project grows, you might prefer to split the frontend and the ba
 <p>Then open your favorite editor and implement the React frontend:</p>
 </div>
 <div class="listingblock">
-<div class="title">Javascript <code>src/main/frontend/src/index.js</code></div>
+<div class="title">Javascript <code>src/main/frontend/src/index.jsx</code></div>
 <div class="content">
 <pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="javascript"><span style="color: #000000;font-weight: bold">import</span> <span style="background-color: #f8f8f8">React</span> <span style="color: #000000;font-weight: bold">from</span> <span style="color: #d14">'</span><span style="color: #d14">react</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">;</span>
 <span style="color: #000000;font-weight: bold">import</span> <span style="background-color: #f8f8f8">ReactDOM</span> <span style="color: #000000;font-weight: bold">from</span> <span style="color: #d14">'</span><span style="color: #d14">react-dom</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">;</span>
+<span style="color: #000000;font-weight: bold">import</span> <span style="color: #d14">'</span><span style="color: #d14">./index.css</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">;</span>
+<span style="color: #000000;font-weight: bold">import</span> <span style="background-color: #f8f8f8">App</span> <span style="color: #000000;font-weight: bold">from</span> <span style="color: #d14">'</span><span style="color: #d14">./components/App</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">;</span>
+<span style="color: #000000;font-weight: bold">import</span> <span style="color: #000000;font-weight: bold">*</span> <span style="color: #000000;font-weight: bold">as</span> <span style="background-color: #f8f8f8">serviceWorker</span> <span style="color: #000000;font-weight: bold">from</span> <span style="color: #d14">'</span><span style="color: #d14">./serviceWorker</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">;</span>
 
-<span style="color: #000000;font-weight: bold">class</span> <span style="background-color: #f8f8f8">Greeter</span> <span style="color: #000000;font-weight: bold">extends</span> <span style="background-color: #f8f8f8">React</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">Component</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(1)</b>
+<span style="background-color: #f8f8f8">ReactDOM</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">render</span><span style="background-color: #f8f8f8">(</span>
+  <span style="color: #000000;font-weight: bold">&lt;</span><span style="background-color: #f8f8f8">App</span> <span style="color: #000000;font-weight: bold">/&gt;</span><span style="background-color: #f8f8f8">,</span> // <b class="conum">(1)</b>
+  <span style="color: #0086B3">document</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">getElementById</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">'</span><span style="color: #d14">root</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">)</span>
+<span style="background-color: #f8f8f8">);</span>
 
-  <span style="color: #000000;font-weight: bold">constructor</span><span style="background-color: #f8f8f8">(</span><span style="background-color: #f8f8f8">props</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">{</span>
+<span style="color: #999988;font-style: italic">// If you want your app to work offline and load faster, you can change</span>
+<span style="color: #999988;font-style: italic">// unregister() to register() below. Note this comes with some pitfalls.</span>
+<span style="color: #999988;font-style: italic">// Learn more about service workers: https://bit.ly/CRA-PWA</span>
+<span style="background-color: #f8f8f8">serviceWorker</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">unregister</span><span style="background-color: #f8f8f8">();</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The <code>Greeter</code> component is rendered in the web page inside <code>App</code> component</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">Javascript <code>src/main/frontend/src/components/Greeter.jsx</code></div>
+<div class="content">
+<pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="javascript"><span style="color: #000000;font-weight: bold">import</span> <span style="background-color: #f8f8f8">React</span> <span style="color: #000000;font-weight: bold">from</span> <span style="color: #d14">'</span><span style="color: #d14">react</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">;</span>
+
+<span style="color: #000000;font-weight: bold">export</span> <span style="color: #000000;font-weight: bold">class</span> <span style="background-color: #f8f8f8">Greeter</span> <span style="color: #000000;font-weight: bold">extends</span> <span style="background-color: #f8f8f8">React</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">Component</span><span style="color: #000000;font-weight: bold">&lt;</span><span style="background-color: #f8f8f8">any</span><span style="background-color: #f8f8f8">,</span> <span style="background-color: #f8f8f8">{</span> <span style="color: #008080">message</span><span style="background-color: #f8f8f8">:</span> <span style="background-color: #f8f8f8">string</span> <span style="background-color: #f8f8f8">}</span><span style="color: #000000;font-weight: bold">&gt;</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(1)</b>
+
+  <span style="color: #000000;font-weight: bold">constructor</span><span style="background-color: #f8f8f8">(</span><span style="color: #008080">props</span><span style="background-color: #f8f8f8">:</span> <span style="background-color: #f8f8f8">any</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">{</span>
     <span style="color: #000000;font-weight: bold">super</span><span style="background-color: #f8f8f8">(</span><span style="background-color: #f8f8f8">props</span><span style="background-color: #f8f8f8">);</span>
     <span style="color: #000000;font-weight: bold">this</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">state</span> <span style="color: #000000;font-weight: bold">=</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(2)</b>
       <span style="color: #008080">message</span><span style="background-color: #f8f8f8">:</span> <span style="color: #d14">"</span><span style="color: #d14">Default message</span><span style="color: #d14">"</span>
     <span style="background-color: #f8f8f8">}</span>
   <span style="background-color: #f8f8f8">}</span>
 
-  <span style="background-color: #f8f8f8">componentDidMount</span><span style="background-color: #f8f8f8">()</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(5)</b>
+  <span style="background-color: #f8f8f8">componentDidMount</span><span style="background-color: #f8f8f8">()</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(4)</b>
     <span style="background-color: #f8f8f8">fetch</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"</span><span style="color: #d14">/api/message</span><span style="color: #d14">"</span><span style="background-color: #f8f8f8">)</span>
       <span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">then</span><span style="background-color: #f8f8f8">(</span><span style="background-color: #f8f8f8">response</span> <span style="color: #000000;font-weight: bold">=&gt;</span> <span style="background-color: #f8f8f8">response</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">text</span><span style="background-color: #f8f8f8">())</span>
       <span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">then</span><span style="background-color: #f8f8f8">(</span><span style="background-color: #f8f8f8">text</span> <span style="color: #000000;font-weight: bold">=&gt;</span> <span style="color: #000000;font-weight: bold">this</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">setState</span><span style="background-color: #f8f8f8">({</span><span style="color: #008080">message</span><span style="background-color: #f8f8f8">:</span> <span style="background-color: #f8f8f8">text</span><span style="background-color: #f8f8f8">}));</span>
@@ -378,16 +367,11 @@ However, as you project grows, you might prefer to split the frontend and the ba
   <span style="background-color: #f8f8f8">render</span><span style="background-color: #f8f8f8">()</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(3)</b>
     <span style="color: #000000;font-weight: bold">return</span> <span style="background-color: #f8f8f8">(</span>
       <span style="color: #000000;font-weight: bold">&lt;</span><span style="background-color: #f8f8f8">div</span><span style="color: #000000;font-weight: bold">&gt;</span>
-        <span style="color: #000000;font-weight: bold">&lt;</span><span style="background-color: #f8f8f8">span</span><span style="color: #000000;font-weight: bold">&gt;</span><span style="background-color: #f8f8f8">{</span><span style="color: #000000;font-weight: bold">this</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">state</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">message</span><span style="background-color: #f8f8f8">}</span><span style="color: #000000;font-weight: bold">&lt;</span><span style="color: #009926">/span</span><span style="color: #a61717;background-color: #e3d2d2">&gt;
+        <span style="color: #000000;font-weight: bold">&lt;</span><span style="background-color: #f8f8f8">span</span><span style="color: #000000;font-weight: bold">&gt;</span><span style="color: #008080">Message</span><span style="background-color: #f8f8f8">:</span> <span style="background-color: #f8f8f8">{</span><span style="color: #000000;font-weight: bold">this</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">state</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">message</span><span style="background-color: #f8f8f8">}</span><span style="color: #000000;font-weight: bold">&lt;</span><span style="color: #009926">/span</span><span style="color: #a61717;background-color: #e3d2d2">&gt;
 </span>      <span style="color: #000000;font-weight: bold">&lt;</span><span style="color: #009926">/div</span><span style="color: #a61717;background-color: #e3d2d2">&gt;
 </span>    <span style="background-color: #f8f8f8">);</span>
   <span style="background-color: #f8f8f8">}</span>
-<span style="background-color: #f8f8f8">}</span>
-
-<span style="background-color: #f8f8f8">ReactDOM</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">render</span><span style="background-color: #f8f8f8">(</span> // <b class="conum">(4)</b>
-  <span style="color: #000000;font-weight: bold">&lt;</span><span style="background-color: #f8f8f8">Greeter</span><span style="color: #000000;font-weight: bold">/&gt;</span><span style="background-color: #f8f8f8">,</span>
-  <span style="color: #0086B3">document</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">getElementById</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">'</span><span style="color: #d14">root</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">)</span>
-<span style="background-color: #f8f8f8">);</span></code></pre>
+<span style="background-color: #f8f8f8">}</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -402,9 +386,6 @@ However, as you project grows, you might prefer to split the frontend and the ba
 <p>The message is displayed within a simple HTML <code>span</code></p>
 </li>
 <li>
-<p>The <code>Greeter</code> component is rendered in the web page</p>
-</li>
-<li>
 <p>After initial rendering, an HTTP request is sent to the backend; the result is used to udpate the component state</p>
 </li>
 </ol>
@@ -416,7 +397,9 @@ Open the <code>package.json</code> file in you editor and add:</p>
 <div class="listingblock">
 <div class="title">Javascript <code>src/main/frontend/package.json</code></div>
 <div class="content">
-<pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="javascript"><span style="color: #d14">"</span><span style="color: #d14">proxy</span><span style="color: #d14">"</span><span style="background-color: #f8f8f8">:</span> <span style="color: #d14">"</span><span style="color: #d14">http://localhost:8080</span><span style="color: #d14">"</span></code></pre>
+<pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="json"><span style="background-color: #f8f8f8">{</span><span style="color: #bbbbbb">
+  </span><span style="color: #990000;font-weight: bold">"proxy"</span><span style="background-color: #f8f8f8">:</span><span style="color: #bbbbbb"> </span><span style="color: #d14">"http://localhost:8080"</span><span style="color: #bbbbbb">
+</span><span style="background-color: #f8f8f8">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -473,73 +456,50 @@ This is why you must copy static files to <code>src/main/resources/webroot</code
 </table>
 </div>
 <div class="paragraph">
-<p>Add these plugins to your Maven POM file:</p>
+<p>If you use Gradle, first add the Gradle NPM plugin:</p>
 </div>
 <div class="listingblock">
-<div class="title">Maven <code>pom.xml</code></div>
+<div class="title">Gradle <code>build.gradle.kts</code></div>
 <div class="content">
-<pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="xml">      <span style="color: #000080">&lt;plugin&gt;</span>
-        <span style="color: #000080">&lt;groupId&gt;</span>com.github.eirslett<span style="color: #000080">&lt;/groupId&gt;</span>
-        <span style="color: #000080">&lt;artifactId&gt;</span>frontend-maven-plugin<span style="color: #000080">&lt;/artifactId&gt;</span>
-        <span style="color: #000080">&lt;version&gt;</span>1.7.6<span style="color: #000080">&lt;/version&gt;</span>
-        <span style="color: #000080">&lt;configuration&gt;</span>
-          <span style="color: #000080">&lt;nodeVersion&gt;</span>v10.15.3<span style="color: #000080">&lt;/nodeVersion&gt;</span>
-          <span style="color: #000080">&lt;npmVersion&gt;</span>6.4.1<span style="color: #000080">&lt;/npmVersion&gt;</span>
-          <span style="color: #000080">&lt;workingDirectory&gt;</span>src/main/frontend<span style="color: #000080">&lt;/workingDirectory&gt;</span>
-          <span style="color: #000080">&lt;installDirectory&gt;</span>target<span style="color: #000080">&lt;/installDirectory&gt;</span>
-        <span style="color: #000080">&lt;/configuration&gt;</span>
-        <span style="color: #000080">&lt;executions&gt;</span>
-          <span style="color: #000080">&lt;execution&gt;</span>
-            <span style="color: #000080">&lt;id&gt;</span>install-node-and-npm<span style="color: #000080">&lt;/id&gt;</span>
-            <span style="color: #000080">&lt;phase&gt;</span>generate-resources<span style="color: #000080">&lt;/phase&gt;</span>
-            <span style="color: #000080">&lt;goals&gt;</span>
-              <span style="color: #000080">&lt;goal&gt;</span>install-node-and-npm<span style="color: #000080">&lt;/goal&gt;</span> <b class="conum">(1)</b>
-            <span style="color: #000080">&lt;/goals&gt;</span>
-          <span style="color: #000080">&lt;/execution&gt;</span>
-          <span style="color: #000080">&lt;execution&gt;</span>
-            <span style="color: #000080">&lt;phase&gt;</span>generate-resources<span style="color: #000080">&lt;/phase&gt;</span>
-            <span style="color: #000080">&lt;id&gt;</span>npm-install<span style="color: #000080">&lt;/id&gt;</span>
-            <span style="color: #000080">&lt;goals&gt;</span>
-              <span style="color: #000080">&lt;goal&gt;</span>npm<span style="color: #000080">&lt;/goal&gt;</span>
-            <span style="color: #000080">&lt;/goals&gt;</span>
-            <span style="color: #000080">&lt;configuration&gt;</span>
-              <span style="color: #000080">&lt;arguments&gt;</span>install<span style="color: #000080">&lt;/arguments&gt;</span> <b class="conum">(2)</b>
-            <span style="color: #000080">&lt;/configuration&gt;</span>
-          <span style="color: #000080">&lt;/execution&gt;</span>
-          <span style="color: #000080">&lt;execution&gt;</span>
-            <span style="color: #000080">&lt;id&gt;</span>npm-run-build<span style="color: #000080">&lt;/id&gt;</span>
-            <span style="color: #000080">&lt;phase&gt;</span>generate-resources<span style="color: #000080">&lt;/phase&gt;</span>
-            <span style="color: #000080">&lt;goals&gt;</span>
-              <span style="color: #000080">&lt;goal&gt;</span>npm<span style="color: #000080">&lt;/goal&gt;</span> <b class="conum">(3)</b>
-            <span style="color: #000080">&lt;/goals&gt;</span>
-            <span style="color: #000080">&lt;configuration&gt;</span>
-              <span style="color: #000080">&lt;arguments&gt;</span>run build<span style="color: #000080">&lt;/arguments&gt;</span>
-            <span style="color: #000080">&lt;/configuration&gt;</span>
-          <span style="color: #000080">&lt;/execution&gt;</span>
-        <span style="color: #000080">&lt;/executions&gt;</span>
-      <span style="color: #000080">&lt;/plugin&gt;</span>
-      <span style="color: #000080">&lt;plugin&gt;</span>
-        <span style="color: #000080">&lt;artifactId&gt;</span>maven-resources-plugin<span style="color: #000080">&lt;/artifactId&gt;</span>
-        <span style="color: #000080">&lt;version&gt;</span>3.1.0<span style="color: #000080">&lt;/version&gt;</span>
-        <span style="color: #000080">&lt;executions&gt;</span>
-          <span style="color: #000080">&lt;execution&gt;</span>
-            <span style="color: #000080">&lt;id&gt;</span>copy-to-webroot<span style="color: #000080">&lt;/id&gt;</span>
-            <span style="color: #000080">&lt;phase&gt;</span>process-resources<span style="color: #000080">&lt;/phase&gt;</span>
-            <span style="color: #000080">&lt;goals&gt;</span>
-              <span style="color: #000080">&lt;goal&gt;</span>copy-resources<span style="color: #000080">&lt;/goal&gt;</span> <b class="conum">(4)</b>
-            <span style="color: #000080">&lt;/goals&gt;</span>
-            <span style="color: #000080">&lt;configuration&gt;</span>
-              <span style="color: #000080">&lt;outputDirectory&gt;</span>${project.build.outputDirectory}/webroot<span style="color: #000080">&lt;/outputDirectory&gt;</span>
-              <span style="color: #000080">&lt;resources&gt;</span>
-                <span style="color: #000080">&lt;resource&gt;</span>
-                  <span style="color: #000080">&lt;directory&gt;</span>${basedir}/src/main/frontend/build<span style="color: #000080">&lt;/directory&gt;</span>
-                  <span style="color: #000080">&lt;filtering&gt;</span>false<span style="color: #000080">&lt;/filtering&gt;</span>
-                <span style="color: #000080">&lt;/resource&gt;</span>
-              <span style="color: #000080">&lt;/resources&gt;</span>
-            <span style="color: #000080">&lt;/configuration&gt;</span>
-          <span style="color: #000080">&lt;/execution&gt;</span>
-        <span style="color: #000080">&lt;/executions&gt;</span>
-      <span style="color: #000080">&lt;/plugin&gt;</span></code></pre>
+<pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="kotlin"><span style="color: #000000;font-weight: bold">import</span> <span style="color: #555555">com.moowork.gradle.node.task.NodeTask</span>
+<span style="color: #000000;font-weight: bold">import</span> <span style="color: #555555">com.moowork.gradle.node.yarn.YarnTask</span>
+
+<span style="color: #990000;font-weight: bold">plugins</span> <span style="background-color: #f8f8f8">{</span>
+  <span style="background-color: #f8f8f8">java</span>
+  <span style="background-color: #f8f8f8">application</span>
+  <span style="color: #990000;font-weight: bold">id</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"com.moowork.node"</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">version</span> <span style="color: #d14">"1.3.1"</span>
+<span style="background-color: #f8f8f8">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then the configuration:</p>
+</div>
+<div class="listingblock">
+<div class="title">Gradle <code>build.gradle.kts</code></div>
+<div class="content">
+<pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="kotlin"><span style="color: #990000;font-weight: bold">node</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(1)</b>
+  <span style="background-color: #f8f8f8">version</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #d14">"10.15.3"</span>
+  <span style="background-color: #f8f8f8">npmVersion</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #d14">"6.4.1"</span>
+  <span style="background-color: #f8f8f8">yarnVersion</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #d14">"1.9.4"</span>
+  <span style="background-color: #f8f8f8">download</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #000000;font-weight: bold">true</span>
+  <span style="background-color: #f8f8f8">nodeModulesDir</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #445588;font-weight: bold">File</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"src/main/frontend"</span><span style="background-color: #f8f8f8">)</span>
+<span style="background-color: #f8f8f8">}</span>
+
+<span style="color: #990000;font-weight: bold">tasks</span> <span style="background-color: #f8f8f8">{</span>
+  <span style="color: #000000;font-weight: bold">val</span> <span style="background-color: #f8f8f8">buildFrontend</span> <span style="color: #000000;font-weight: bold">by</span> <span style="color: #990000;font-weight: bold">creating</span><span style="background-color: #f8f8f8">(</span><span style="color: #445588;font-weight: bold">YarnTask</span><span style="color: #000000;font-weight: bold">::</span><span style="color: #000000;font-weight: bold">class</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(3)</b>
+    <span style="background-color: #f8f8f8">args</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #990000;font-weight: bold">listOf</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"build"</span><span style="background-color: #f8f8f8">)</span>
+    <span style="color: #990000;font-weight: bold">dependsOn</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"yarn"</span><span style="background-color: #f8f8f8">)</span> // <b class="conum">(2)</b>
+  <span style="background-color: #f8f8f8">}</span>
+
+  <span style="color: #000000;font-weight: bold">val</span> <span style="background-color: #f8f8f8">copyToWebRoot</span> <span style="color: #000000;font-weight: bold">by</span> <span style="color: #990000;font-weight: bold">creating</span><span style="background-color: #f8f8f8">(</span><span style="color: #445588;font-weight: bold">Copy</span><span style="color: #000000;font-weight: bold">::</span><span style="color: #000000;font-weight: bold">class</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(4)</b>
+    <span style="color: #990000;font-weight: bold">from</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"src/main/frontend/build"</span><span style="background-color: #f8f8f8">)</span>
+    <span style="background-color: #f8f8f8">destinationDir</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #445588;font-weight: bold">File</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"${buildDir}/classes/java/main/webroot"</span><span style="background-color: #f8f8f8">)</span>
+    <span style="color: #990000;font-weight: bold">dependsOn</span><span style="background-color: #f8f8f8">(</span><span style="background-color: #f8f8f8">buildFrontend</span><span style="background-color: #f8f8f8">)</span>
+  <span style="background-color: #f8f8f8">}</span>
+
+  <span style="color: #d14">"processResources"</span><span style="background-color: #f8f8f8">(</span><span style="color: #445588;font-weight: bold">ProcessResources</span><span style="color: #000000;font-weight: bold">::</span><span style="color: #000000;font-weight: bold">class</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">{</span>
+    <span style="color: #990000;font-weight: bold">dependsOn</span><span style="background-color: #f8f8f8">(</span><span style="background-color: #f8f8f8">copyToWebRoot</span><span style="background-color: #f8f8f8">)</span>
+  <span style="background-color: #f8f8f8">}</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -559,57 +519,10 @@ This is why you must copy static files to <code>src/main/resources/webroot</code
 </ol>
 </div>
 <div class="paragraph">
-<p>If you use Gradle, first add the Gradle NPM plugin:</p>
-</div>
-<div class="listingblock">
-<div class="title">Gradle <code>build.gradle.kts</code></div>
-<div class="content">
-<pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="kotlin"><span style="color: #000000;font-weight: bold">import</span> <span style="color: #555555">com.moowork.gradle.node.npm.NpmTask</span>
-
-<span style="color: #990000;font-weight: bold">plugins</span> <span style="background-color: #f8f8f8">{</span>
-  <span style="background-color: #f8f8f8">java</span>
-  <span style="background-color: #f8f8f8">application</span>
-  <span style="color: #990000;font-weight: bold">id</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"com.moowork.node"</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">version</span> <span style="color: #d14">"1.3.1"</span>
-<span style="background-color: #f8f8f8">}</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then the configuration is similar to what we did with Maven:</p>
-</div>
-<div class="listingblock">
-<div class="title">Gradle <code>build.gradle.kts</code></div>
-<div class="content">
-<pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="kotlin"><span style="color: #990000;font-weight: bold">node</span> <span style="background-color: #f8f8f8">{</span>
-  <span style="background-color: #f8f8f8">version</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #d14">"10.15.3"</span>
-  <span style="background-color: #f8f8f8">npmVersion</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #d14">"6.4.1"</span>
-  <span style="background-color: #f8f8f8">download</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #000000;font-weight: bold">true</span>
-  <span style="background-color: #f8f8f8">nodeModulesDir</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #445588;font-weight: bold">File</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"src/main/frontend"</span><span style="background-color: #f8f8f8">)</span>
-<span style="background-color: #f8f8f8">}</span>
-
-<span style="color: #000000;font-weight: bold">val</span> <span style="background-color: #f8f8f8">buildFrontend</span> <span style="color: #000000;font-weight: bold">by</span> <span style="background-color: #f8f8f8">tasks</span><span style="background-color: #f8f8f8">.</span><span style="color: #990000;font-weight: bold">creating</span><span style="background-color: #f8f8f8">(</span><span style="color: #445588;font-weight: bold">NpmTask</span><span style="color: #000000;font-weight: bold">::</span><span style="color: #000000;font-weight: bold">class</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">{</span>
-  <span style="color: #990000;font-weight: bold">setArgs</span><span style="background-color: #f8f8f8">(</span><span style="color: #990000;font-weight: bold">listOf</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"run"</span><span style="background-color: #f8f8f8">,</span> <span style="color: #d14">"build"</span><span style="background-color: #f8f8f8">))</span>
-  <span style="color: #990000;font-weight: bold">dependsOn</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"npmInstall"</span><span style="background-color: #f8f8f8">)</span>
-<span style="background-color: #f8f8f8">}</span>
-
-<span style="color: #000000;font-weight: bold">val</span> <span style="background-color: #f8f8f8">copyToWebRoot</span> <span style="color: #000000;font-weight: bold">by</span> <span style="background-color: #f8f8f8">tasks</span><span style="background-color: #f8f8f8">.</span><span style="color: #990000;font-weight: bold">creating</span><span style="background-color: #f8f8f8">(</span><span style="color: #445588;font-weight: bold">Copy</span><span style="color: #000000;font-weight: bold">::</span><span style="color: #000000;font-weight: bold">class</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">{</span>
-  <span style="color: #990000;font-weight: bold">from</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"src/main/frontend/build"</span><span style="background-color: #f8f8f8">)</span>
-  <span style="background-color: #f8f8f8">destinationDir</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #445588;font-weight: bold">File</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"${buildDir}/classes/java/main/webroot"</span><span style="background-color: #f8f8f8">)</span>
-  <span style="color: #990000;font-weight: bold">dependsOn</span><span style="background-color: #f8f8f8">(</span><span style="background-color: #f8f8f8">buildFrontend</span><span style="background-color: #f8f8f8">)</span>
-<span style="background-color: #f8f8f8">}</span>
-
-<span style="color: #000000;font-weight: bold">val</span> <span style="background-color: #f8f8f8">processResources</span> <span style="color: #000000;font-weight: bold">by</span> <span style="background-color: #f8f8f8">tasks</span><span style="background-color: #f8f8f8">.</span><span style="color: #990000;font-weight: bold">getting</span><span style="background-color: #f8f8f8">(</span><span style="color: #445588;font-weight: bold">ProcessResources</span><span style="color: #000000;font-weight: bold">::</span><span style="color: #000000;font-weight: bold">class</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">{</span>
-  <span style="color: #990000;font-weight: bold">dependsOn</span><span style="background-color: #f8f8f8">(</span><span style="background-color: #f8f8f8">copyToWebRoot</span><span style="background-color: #f8f8f8">)</span>
-<span style="background-color: #f8f8f8">}</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Make sure all previous <code>npm</code>, <code>mvn</code> or <code>gradlew</code> executions are terminated and start the Vert.x server:</p>
+<p>Make sure all previous <code>npm</code> and <code>gradlew</code> executions are terminated and start the Vert.x server:</p>
 </div>
 <div class="ulist">
 <ul>
-<li>
-<p>with Maven: <code>mvn compile exec:java</code>, or</p>
-</li>
 <li>
 <p>with Gradle: <code>./gradlew run</code> (Linux, macOS) or <code>gradlew run</code> (Windows).</p>
 </li>
@@ -764,7 +677,7 @@ This is why you must copy static files to <code>src/main/resources/webroot</code
   <div class="row">
     <div class="col">
       <hr>
-      <p><small>Last published: 2019-10-21 15:42:20 +0000.</small></p>
+      <p><small>Last published: 2019-10-22 20:38:31 +0000.</small></p>
     </div>
   </div>
 </div>
