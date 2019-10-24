@@ -489,17 +489,14 @@ This is why you must copy static files to <code>src/main/resources/webroot</code
 <div class="listingblock">
 <div class="title">Gradle <code>build.gradle.kts</code></div>
 <div class="content">
-<pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="kotlin"><span style="color: #000000;font-weight: bold">import</span> <span style="color: #555555">com.moowork.gradle.node.yarn.YarnTask</span>
-<span style="color: #000000;font-weight: bold">import</span> <span style="color: #555555">org.gradle.api.tasks.testing.logging.TestLogEvent</span>
-<span style="color: #000000;font-weight: bold">import</span> <span style="color: #555555">org.jetbrains.kotlin.gradle.tasks.KotlinCompile</span>
-
-<span style="color: #990000;font-weight: bold">plugins</span> <span style="background-color: #f8f8f8">{</span>
-  <span style="background-color: #f8f8f8">java</span>
+<pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="kotlin"><span style="color: #990000;font-weight: bold">plugins</span> <span style="background-color: #f8f8f8">{</span>
   <span style="color: #990000;font-weight: bold">kotlin</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"jvm"</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">version</span> <span style="color: #445588;font-weight: bold">Versions</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">org_jetbrains_kotlin_jvm_gradle_plugin</span>
   <span style="color: #990000;font-weight: bold">kotlin</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"kapt"</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">version</span> <span style="color: #445588;font-weight: bold">Versions</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">org_jetbrains_kotlin_jvm_gradle_plugin</span>
   <span style="background-color: #f8f8f8">application</span>
+  <span style="color: #990000;font-weight: bold">id</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"org.jlleitschuh.gradle.ktlint"</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">version</span> <span style="color: #445588;font-weight: bold">Versions</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">org_jlleitschuh_gradle_ktlint_gradle_plugin</span>
   <span style="color: #990000;font-weight: bold">id</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"com.moowork.node"</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">version</span> <span style="color: #445588;font-weight: bold">Versions</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">com_moowork_node_gradle_plugin</span>
   <span style="color: #990000;font-weight: bold">id</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"de.fayard.refreshVersions"</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">version</span> <span style="color: #445588;font-weight: bold">Versions</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">de_fayard_refreshversions_gradle_plugin</span>
+  <span style="background-color: #f8f8f8">jacoco</span>
 <span style="background-color: #f8f8f8">}</span></code></pre>
 </div>
 </div>
@@ -510,9 +507,9 @@ This is why you must copy static files to <code>src/main/resources/webroot</code
 <div class="title">Gradle <code>build.gradle.kts</code></div>
 <div class="content">
 <pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="kotlin"><span style="color: #990000;font-weight: bold">node</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(1)</b>
-  <span style="background-color: #f8f8f8">version</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #d14">"10.15.3"</span>
-  <span style="background-color: #f8f8f8">npmVersion</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #d14">"6.4.1"</span>
-  <span style="background-color: #f8f8f8">yarnVersion</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #d14">"1.9.4"</span>
+  <span style="background-color: #f8f8f8">version</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #445588;font-weight: bold">Versions</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">node_version</span>
+  <span style="background-color: #f8f8f8">npmVersion</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #445588;font-weight: bold">Versions</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">npm_version</span>
+  <span style="background-color: #f8f8f8">yarnVersion</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #445588;font-weight: bold">Versions</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">yarn_version</span>
   <span style="background-color: #f8f8f8">download</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #000000;font-weight: bold">true</span>
   <span style="background-color: #f8f8f8">nodeModulesDir</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #445588;font-weight: bold">File</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"src/main/frontend"</span><span style="background-color: #f8f8f8">)</span>
 <span style="background-color: #f8f8f8">}</span>
@@ -532,7 +529,7 @@ This is why you must copy static files to <code>src/main/resources/webroot</code
 
   <span style="color: #000000;font-weight: bold">val</span> <span style="background-color: #f8f8f8">copyToWebRoot</span> <span style="color: #000000;font-weight: bold">by</span> <span style="color: #990000;font-weight: bold">creating</span><span style="background-color: #f8f8f8">(</span><span style="color: #445588;font-weight: bold">Copy</span><span style="color: #000000;font-weight: bold">::</span><span style="color: #000000;font-weight: bold">class</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(4)</b>
     <span style="color: #990000;font-weight: bold">from</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"src/main/frontend/build"</span><span style="background-color: #f8f8f8">)</span>
-    <span style="background-color: #f8f8f8">destinationDir</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #445588;font-weight: bold">File</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"${buildDir}/classes/kotlin/main/webroot"</span><span style="background-color: #f8f8f8">)</span>
+    <span style="background-color: #f8f8f8">destinationDir</span> <span style="background-color: #f8f8f8">=</span> <span style="color: #445588;font-weight: bold">File</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"$buildDir/classes/kotlin/main/webroot"</span><span style="background-color: #f8f8f8">)</span>
     <span style="color: #990000;font-weight: bold">dependsOn</span><span style="background-color: #f8f8f8">(</span><span style="background-color: #f8f8f8">buildFrontend</span><span style="background-color: #f8f8f8">)</span>
   <span style="background-color: #f8f8f8">}</span>
 
@@ -716,7 +713,7 @@ This is why you must copy static files to <code>src/main/resources/webroot</code
   <div class="row">
     <div class="col">
       <hr>
-      <p><small>Last published: 2019-10-24 19:15:59 +0000.</small></p>
+      <p><small>Last published: 2019-10-24 23:06:41 +0000.</small></p>
     </div>
   </div>
 </div>
