@@ -356,7 +356,7 @@ However, as you project grows, you might prefer to split the frontend and the ba
 
 <span style="background-color: #f8f8f8">ReactDOM</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">render</span><span style="background-color: #f8f8f8">(</span>
   <span style="color: #000000;font-weight: bold">&lt;</span><span style="background-color: #f8f8f8">App</span> <span style="color: #000000;font-weight: bold">/&gt;</span><span style="background-color: #f8f8f8">,</span> // <b class="conum">(1)</b>
-  <span style="color: #0086B3">document</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">getElementById</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">'</span><span style="color: #d14">root</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">)</span>
+  <span style="color: #0086B3">document</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">getElementById</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">'</span><span style="color: #d14">root</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">),</span>
 <span style="background-color: #f8f8f8">);</span>
 
 <span style="color: #999988;font-style: italic">// If you want your app to work offline and load faster, you can change</span>
@@ -376,30 +376,42 @@ However, as you project grows, you might prefer to split the frontend and the ba
 <div class="title">Javascript <code>src/main/frontend/src/components/Greeter.jsx</code></div>
 <div class="content">
 <pre class="rouge highlight" style="background-color: #f8f8f8"><code data-lang="javascript"><span style="color: #000000;font-weight: bold">import</span> <span style="background-color: #f8f8f8">React</span> <span style="color: #000000;font-weight: bold">from</span> <span style="color: #d14">'</span><span style="color: #d14">react</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">;</span>
+<span style="color: #000000;font-weight: bold">import</span> <span style="background-color: #f8f8f8">axios</span><span style="background-color: #f8f8f8">,</span> <span style="background-color: #f8f8f8">{</span> <span style="background-color: #f8f8f8">AxiosResponse</span> <span style="background-color: #f8f8f8">}</span> <span style="color: #000000;font-weight: bold">from</span> <span style="color: #d14">'</span><span style="color: #d14">axios</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">;</span>
 
-<span style="color: #000000;font-weight: bold">export</span> <span style="color: #000000;font-weight: bold">class</span> <span style="background-color: #f8f8f8">Greeter</span> <span style="color: #000000;font-weight: bold">extends</span> <span style="background-color: #f8f8f8">React</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">Component</span><span style="color: #000000;font-weight: bold">&lt;</span><span style="background-color: #f8f8f8">any</span><span style="background-color: #f8f8f8">,</span> <span style="background-color: #f8f8f8">{</span> <span style="color: #008080">message</span><span style="background-color: #f8f8f8">:</span> <span style="background-color: #f8f8f8">string</span> <span style="background-color: #f8f8f8">}</span><span style="color: #000000;font-weight: bold">&gt;</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(1)</b>
+<span style="background-color: #f8f8f8">type</span> <span style="background-color: #f8f8f8">GreeterState</span> <span style="color: #000000;font-weight: bold">=</span> <span style="background-color: #f8f8f8">{</span> <span style="color: #008080">message</span><span style="background-color: #f8f8f8">:</span> <span style="background-color: #f8f8f8">string</span> <span style="background-color: #f8f8f8">};</span>
 
+<span style="color: #000000;font-weight: bold">class</span> <span style="background-color: #f8f8f8">Greeter</span> <span style="color: #000000;font-weight: bold">extends</span> <span style="background-color: #f8f8f8">React</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">Component</span><span style="color: #000000;font-weight: bold">&lt;</span><span style="background-color: #f8f8f8">any</span><span style="background-color: #f8f8f8">,</span> <span style="background-color: #f8f8f8">GreeterState</span><span style="color: #000000;font-weight: bold">&gt;</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(1)</b>
   <span style="color: #000000;font-weight: bold">constructor</span><span style="background-color: #f8f8f8">(</span><span style="color: #008080">props</span><span style="background-color: #f8f8f8">:</span> <span style="background-color: #f8f8f8">any</span><span style="background-color: #f8f8f8">)</span> <span style="background-color: #f8f8f8">{</span>
     <span style="color: #000000;font-weight: bold">super</span><span style="background-color: #f8f8f8">(</span><span style="background-color: #f8f8f8">props</span><span style="background-color: #f8f8f8">);</span>
     <span style="color: #000000;font-weight: bold">this</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">state</span> <span style="color: #000000;font-weight: bold">=</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(2)</b>
-      <span style="color: #008080">message</span><span style="background-color: #f8f8f8">:</span> <span style="color: #d14">"</span><span style="color: #d14">Default message</span><span style="color: #d14">"</span>
-    <span style="background-color: #f8f8f8">}</span>
+      <span style="color: #008080">message</span><span style="background-color: #f8f8f8">:</span> <span style="color: #d14">'</span><span style="color: #d14">Default message</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">,</span>
+    <span style="background-color: #f8f8f8">};</span>
   <span style="background-color: #f8f8f8">}</span>
 
   <span style="background-color: #f8f8f8">componentDidMount</span><span style="background-color: #f8f8f8">()</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(4)</b>
-    <span style="background-color: #f8f8f8">fetch</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">"</span><span style="color: #d14">/api/message</span><span style="color: #d14">"</span><span style="background-color: #f8f8f8">)</span>
-      <span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">then</span><span style="background-color: #f8f8f8">(</span><span style="background-color: #f8f8f8">response</span> <span style="color: #000000;font-weight: bold">=&gt;</span> <span style="background-color: #f8f8f8">response</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">text</span><span style="background-color: #f8f8f8">())</span>
-      <span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">then</span><span style="background-color: #f8f8f8">(</span><span style="background-color: #f8f8f8">text</span> <span style="color: #000000;font-weight: bold">=&gt;</span> <span style="color: #000000;font-weight: bold">this</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">setState</span><span style="background-color: #f8f8f8">({</span><span style="color: #008080">message</span><span style="background-color: #f8f8f8">:</span> <span style="background-color: #f8f8f8">text</span><span style="background-color: #f8f8f8">}));</span>
+    <span style="color: #000000;font-weight: bold">this</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">getMessages</span><span style="background-color: #f8f8f8">();</span>
+  <span style="background-color: #f8f8f8">}</span>
+
+  <span style="color: #000000;font-weight: bold">private</span> <span style="color: #000000;font-weight: bold">async</span> <span style="background-color: #f8f8f8">getMessages</span><span style="background-color: #f8f8f8">()</span> <span style="background-color: #f8f8f8">{</span>
+    <span style="color: #000000;font-weight: bold">const</span> <span style="color: #008080">messages</span><span style="background-color: #f8f8f8">:</span> <span style="background-color: #f8f8f8">AxiosResponse</span><span style="color: #000000;font-weight: bold">&lt;</span><span style="background-color: #f8f8f8">string</span><span style="color: #000000;font-weight: bold">&gt;</span> <span style="color: #000000;font-weight: bold">=</span> <span style="color: #000000;font-weight: bold">await</span> <span style="background-color: #f8f8f8">axios</span><span style="background-color: #f8f8f8">.</span><span style="color: #000000;font-weight: bold">get</span><span style="background-color: #f8f8f8">(</span><span style="color: #d14">'</span><span style="color: #d14">/api/message</span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">,</span> <span style="background-color: #f8f8f8">{</span> <span style="color: #008080">responseType</span><span style="background-color: #f8f8f8">:</span> <span style="color: #d14">'</span><span style="color: #d14">text</span><span style="color: #d14">'</span> <span style="background-color: #f8f8f8">});</span>
+    <span style="color: #000000;font-weight: bold">this</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">setState</span><span style="background-color: #f8f8f8">({</span> <span style="color: #008080">message</span><span style="background-color: #f8f8f8">:</span> <span style="background-color: #f8f8f8">messages</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">data</span> <span style="background-color: #f8f8f8">});</span>
   <span style="background-color: #f8f8f8">}</span>
 
   <span style="background-color: #f8f8f8">render</span><span style="background-color: #f8f8f8">()</span> <span style="background-color: #f8f8f8">{</span> // <b class="conum">(3)</b>
+    <span style="color: #000000;font-weight: bold">const</span> <span style="background-color: #f8f8f8">{</span> <span style="background-color: #f8f8f8">message</span> <span style="background-color: #f8f8f8">}</span> <span style="color: #000000;font-weight: bold">=</span> <span style="color: #000000;font-weight: bold">this</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">state</span><span style="background-color: #f8f8f8">;</span>
     <span style="color: #000000;font-weight: bold">return</span> <span style="background-color: #f8f8f8">(</span>
       <span style="color: #000000;font-weight: bold">&lt;</span><span style="background-color: #f8f8f8">div</span><span style="color: #000000;font-weight: bold">&gt;</span>
-        <span style="color: #000000;font-weight: bold">&lt;</span><span style="background-color: #f8f8f8">span</span><span style="color: #000000;font-weight: bold">&gt;</span><span style="color: #008080">Message</span><span style="background-color: #f8f8f8">:</span> <span style="background-color: #f8f8f8">{</span><span style="color: #000000;font-weight: bold">this</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">state</span><span style="background-color: #f8f8f8">.</span><span style="background-color: #f8f8f8">message</span><span style="background-color: #f8f8f8">}</span><span style="color: #000000;font-weight: bold">&lt;</span><span style="color: #009926">/span</span><span style="color: #a61717;background-color: #e3d2d2">&gt;
+        <span style="color: #000000;font-weight: bold">&lt;</span><span style="background-color: #f8f8f8">span</span><span style="color: #000000;font-weight: bold">&gt;</span>
+          <span style="color: #008080">Message</span><span style="background-color: #f8f8f8">:</span>
+          <span style="background-color: #f8f8f8">{</span><span style="color: #d14">'</span><span style="color: #d14"> </span><span style="color: #d14">'</span><span style="background-color: #f8f8f8">}</span>
+          <span style="background-color: #f8f8f8">{</span><span style="background-color: #f8f8f8">message</span><span style="background-color: #f8f8f8">}</span>
+        <span style="color: #000000;font-weight: bold">&lt;</span><span style="color: #009926">/span</span><span style="color: #a61717;background-color: #e3d2d2">&gt;
 </span>      <span style="color: #000000;font-weight: bold">&lt;</span><span style="color: #009926">/div</span><span style="color: #a61717;background-color: #e3d2d2">&gt;
 </span>    <span style="background-color: #f8f8f8">);</span>
   <span style="background-color: #f8f8f8">}</span>
-<span style="background-color: #f8f8f8">}</span></code></pre>
+<span style="background-color: #f8f8f8">}</span>
+
+<span style="color: #000000;font-weight: bold">export</span> <span style="color: #000000;font-weight: bold">default</span> <span style="background-color: #f8f8f8">Greeter</span><span style="background-color: #f8f8f8">;</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -713,7 +725,7 @@ This is why you must copy static files to <code>src/main/resources/webroot</code
   <div class="row">
     <div class="col">
       <hr>
-      <p><small>Last published: 2019-10-24 23:06:41 +0000.</small></p>
+      <p><small>Last published: 2019-10-25 16:01:59 +0000.</small></p>
     </div>
   </div>
 </div>
