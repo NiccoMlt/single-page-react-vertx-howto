@@ -18,6 +18,9 @@ jobs:
       test_command:
         type: string
         default: test
+      coverage_command:
+        type: string
+        default: jacocoTestReport
       test_results_path:
         description: Results to be published
         type: string
@@ -26,10 +29,6 @@ jobs:
         description: Artifacts to be published
         type: string
         default: build/reports
-      jacoco_report_path:
-        description: JaCoCo report to be uploaded on Codecov
-        type: string
-        default: build/reports/jacoco
     steps:
       - checkout
       - gradle/with_cache:
@@ -37,14 +36,16 @@ jobs:
             - run:
                 name: Run Tests
                 command: ./gradlew << parameters.test_command >>
+            - run:
+                name: JaCoCo Test Report
+                command: ./gradlew << parameters.coverage_command >>
       - gradle/collect_test_results:
           test_results_path: <<parameters.test_results_path>>
           reports_path: <<parameters.reports_path>>
       - persist_to_workspace:
-          root: build/reports/*
+          root: build
           paths:
-            - foo/bar
-            - baz
+            - reports/*
 
   codecov-generate-upload:
     description: Generate JaCoCo coverage and upload on Codecov
@@ -59,12 +60,7 @@ jobs:
       - gradle/with_cache:
           steps:
             - attach_workspace:
-                at: build/reports
-            - run: ls -al build/reports
-            - run:
-                name: JaCoCo Test Report
-                command: ./gradlew jacocoTestReport
-            - run: ls -al build/reports
+                at: build
             - run: curl -s https://codecov.io/bash | bash
 
 workflows:
