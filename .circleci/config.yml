@@ -21,8 +21,7 @@ jobs:
             - run:
                 name: JaCoCo Test Report
                 command: ./gradlew jacocoTestReport
-      - codecov/upload:
-          file: build/reports/jacoco/report.xml
+      - run: curl -s https://codecov.io/bash | bash
 
 workflows:
   backend:
