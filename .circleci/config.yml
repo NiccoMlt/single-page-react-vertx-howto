@@ -6,6 +6,46 @@ orbs:
   codecov: codecov/codecov@1.0.5
 
 jobs:
+
+  junit:
+    description: Run JUnit tests with Gradle and store reports
+    executor: << parameters.executor >>
+    parameters:
+      executor:
+        description: The name of custom executor to use
+        type: executor
+        default: gradle/gradle
+      test_command:
+        type: string
+        default: test
+      test_results_path:
+        description: Results to be published
+        type: string
+        default: build/test-results
+      reports_path:
+        description: Artifacts to be published
+        type: string
+        default: build/reports
+      jacoco_report_path:
+        description: JaCoCo report to be uploaded on Codecov
+        type: string
+        default: build/reports/jacoco
+    steps:
+      - checkout
+      - gradle/with_cache:
+          steps:
+            - run:
+                name: Run Tests
+                command: ./gradlew << parameters.test_command >>
+      - gradle/collect_test_results:
+          test_results_path: <<parameters.test_results_path>>
+          reports_path: <<parameters.reports_path>>
+      - persist_to_workspace:
+          root: build/reports/*
+          paths:
+            - foo/bar
+            - baz
+
   codecov-generate-upload:
     description: Generate JaCoCo coverage and upload on Codecov
     executor: << parameters.executor >>
@@ -18,22 +58,23 @@ jobs:
       - checkout
       - gradle/with_cache:
           steps:
+            - attach_workspace:
+                at: build/reports
+            - run: ls -al build/reports
             - run:
                 name: JaCoCo Test Report
                 command: ./gradlew jacocoTestReport
-            - run: bash <(curl -s https://codecov.io/bash)
+            - run: ls -al build/reports
+            - run: curl -s https://codecov.io/bash | bash
 
 workflows:
   backend:
     jobs:
-      - gradle/test:
-          name: JUnit
-          test_results_path: build/test-results
-          reports_path: build/reports
+      - junit
       - gradle/run:
           name: ktlint
           command: ktlintCheck
       - codecov-generate-upload:
-          name: Codecov
+          name: codecov
           requires:
-            - JUnit
+            - junit
