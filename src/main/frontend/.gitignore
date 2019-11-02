@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/osx,node,code,react,linux,macos,windows,webstorm
 # Edit at https://www.gitignore.io/?templates=osx,node,code,react,linux,macos,windows,webstorm
 
@@ -287,3 +286,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/osx,node,code,react,linux,macos,windows,webstorm
+junit.xml

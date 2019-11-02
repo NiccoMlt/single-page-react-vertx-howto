@@ -2,6 +2,8 @@
 
 [![OpenAPI Validation](http://validator.swagger.io/validator?url=https://raw.githubusercontent.com/NiccoMlt/single-page-react-vertx-howto/master/src/main/resources/api.yaml)](https://editor.swagger.io/?url=https://raw.githubusercontent.com/NiccoMlt/single-page-react-vertx-howto/master/src/main/resources/api.yaml)
 [![Build Status](https://travis-ci.com/NiccoMlt/single-page-react-vertx-howto.svg?branch=master)](https://travis-ci.com/NiccoMlt/single-page-react-vertx-howto)
+[![codecov](https://codecov.io/gh/NiccoMlt/single-page-react-vertx-howto/branch/master/graph/badge.svg)](https://codecov.io/gh/NiccoMlt/single-page-react-vertx-howto)
+[![CodeFactor](https://www.codefactor.io/repository/github/niccomlt/single-page-react-vertx-howto/badge)](https://www.codefactor.io/repository/github/niccomlt/single-page-react-vertx-howto)
 
 |              | Framework | Language | Style | 
 | ------------ | --------- | -------- | ----- |
