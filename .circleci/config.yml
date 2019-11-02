@@ -58,10 +58,10 @@ jobs:
         description: The name of custom executor to use
         type: executor
         default: node/default
-    working_directory: ~/src/main/frontend
     steps:
       - checkout
-      - yarn/install
+      - run: pwd
+      - run: ls -al
 
   codecov-jacoco-upload:
     description: Upload JaCoCo coverage on Codecov
