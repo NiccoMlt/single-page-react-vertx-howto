@@ -61,11 +61,8 @@ jobs:
     steps:
       - checkout
       - run:
-          command: pwd
+          command: pwd && ls -al
           working_directory: ~/project/src/main/frontend
-      - run:
-          command: ls -al
-          working_directory: $CIRCLECI_WORKING_DIRECTORY/src/main/frontend
 
   codecov-jacoco-upload:
     description: Upload JaCoCo coverage on Codecov
