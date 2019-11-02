@@ -2,7 +2,6 @@ version: ~> 1.0
 os: linux
 dist: xenial
 language: shell
-codecov: true
 env:
   global:
     - BACKEND_BUILD_DIR=$TRAVIS_BUILD_DIR
