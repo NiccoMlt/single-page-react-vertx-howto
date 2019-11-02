@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   gradle: circleci/gradle@1.0.11
   node: circleci/node@1.1.6
+  node-build: substantial/node-build@2.3.0
   codecov: codecov/codecov@1.0.5
 
 jobs:
@@ -47,8 +48,8 @@ jobs:
           paths:
             - reports/*
 
-  codecov-generate-upload:
-    description: Generate JaCoCo coverage and upload on Codecov
+  codecov-jacoco-upload:
+    description: Upload JaCoCo coverage on Codecov
     executor: << parameters.executor >>
     parameters:
       executor:
@@ -70,7 +71,7 @@ workflows:
       - gradle/run:
           name: ktlint
           command: ktlintCheck
-      - codecov-generate-upload:
+      - codecov-jacoco-upload:
           name: codecov
           requires:
             - junit
