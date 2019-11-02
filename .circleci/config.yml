@@ -4,6 +4,7 @@ orbs:
   gradle: circleci/gradle@1.0.11
   node: circleci/node@1.1.6
   node-build: substantial/node-build@2.3.0
+  yarn: substantial/yarn@3.10.2
   codecov: codecov/codecov@1.0.5
 
 jobs:
@@ -48,6 +49,20 @@ jobs:
           paths:
             - reports/*
 
+  jest:
+    description: |
+      Run Jest tests with CRA scripts from Yarn and store reports
+    executor: << parameters.executor >>
+    parameters:
+      executor:
+        description: The name of custom executor to use
+        type: executor
+        default: node/default
+    working_directory: ~/project/src/main/frontend
+    steps:
+      - checkout
+      - yarn/install
+
   codecov-jacoco-upload:
     description: Upload JaCoCo coverage on Codecov
     executor: << parameters.executor >>
@@ -75,3 +90,6 @@ workflows:
           name: codecov
           requires:
             - junit
+  frontend:
+    jobs:
+      - jest
