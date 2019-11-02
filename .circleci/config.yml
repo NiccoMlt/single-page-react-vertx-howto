@@ -58,11 +58,14 @@ jobs:
         description: The name of custom executor to use
         type: executor
         default: node/default
-    working_directory: ~/project/src/main/frontend
     steps:
       - checkout
-      - run: pwd
-      - run: ls -al
+      - run:
+          command: pwd
+          working_directory: ~/project/src/main/frontend
+      - run:
+          command: ls -al
+          working_directory: $CIRCLECI_WORKING_DIRECTORY/src/main/frontend
 
   codecov-jacoco-upload:
     description: Upload JaCoCo coverage on Codecov
@@ -81,16 +84,16 @@ jobs:
             - run: curl -s https://codecov.io/bash | bash
 
 workflows:
-  backend:
-    jobs:
-      - junit
-      - gradle/run:
-          name: ktlint
-          command: ktlintCheck
-      - codecov-jacoco-upload:
-          name: codecov
-          requires:
-            - junit
+#  backend:
+#    jobs:
+#      - junit
+#      - gradle/run:
+#          name: ktlint
+#          command: ktlintCheck
+#      - codecov-jacoco-upload:
+#          name: codecov
+#          requires:
+#            - junit
   frontend:
     jobs:
       - jest
